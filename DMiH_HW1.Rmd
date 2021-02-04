@@ -38,8 +38,8 @@ str(birth)
 #### **Find the number of observations for each country. (Hint: use table())**
 
 ```{r}
-table(birth$Country)
-plyr::count(birth, 'Country') # using count from plyr package
+#table(birth$Country)
+count(birth, 'Country') #using count() from plyr package
 ```
 ***
 
@@ -47,7 +47,12 @@ plyr::count(birth, 'Country') # using count from plyr package
 #### **Assign the results in (1) to a data frame object named “country_freq”. In the data frame “country_freq”, each country is the observation. There are two variables in the data “country freq”. The first variable is named “Country”, which contains the name of the country of each observation. The second variable is named “Freq”, which contains the number of observations for each country in the birth data. (Hint: to create a data frame, use data.frame() or tbl_df() in the package dplyr. To rename the column names, use the function rename() in the package dplyr.)**
 
 ```{r}
+country_freq = count(birth, 'Country')
+country_freq
 
+#country_freq = data.frame(table(birth$Country))
+#names(country_freq)[1] = "Country"
+#country_freq
 ```
 
 ***
@@ -55,7 +60,8 @@ plyr::count(birth, 'Country') # using count from plyr package
 #### **Reorder “country_freq” by variable “Freq” in descending order. (Hint: use arrange() in the package dplyr). Which country have the most number of observations?**
 
 ```{r}
-
+country_freq = arrange(country_freq, desc(freq))
+country_freq
 ```
 
 ***
@@ -63,7 +69,9 @@ plyr::count(birth, 'Country') # using count from plyr package
 #### **Plot a bar plot to show the number of observations for the country France (FR), Belgium (BE), Switzerland (CH) and Canada (CA) in the birth data. The x-axis represents countries, and the y-axis represents number of observations. Set up the name of the plot to be “Number of observations by country”, the y-axis limits to range from 0 to 700, and the color of the bar to be green. (Hint: use barplot() to plot a bar plot.)**
 
 ```{r}
-
+birthTable = table(birth$Country)
+selectColumns = c(birthTable["FR"], birthTable["BE"], birthTable["CH"], birthTable["CA"])
+barplot(selectColumns, main="Number of observations by country", xlab="Country", ylab="Frequency", ylim=c(0,700), col="green")
 ```
 
 ***
