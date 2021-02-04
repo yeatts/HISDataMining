@@ -1,0 +1,204 @@
+---
+title: "HPMT 5335 - Assignment 1"
+author: "Evan Munro and Jeremy Yeatts"
+date: "2/11/2021"
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    toc: true
+    toc_depth: 3
+---
+
+```{r include = F}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+# Prompt
+
+**"Please refer to the 'birth' data in the package catdata. In the birth data, each observation is one birth. The description and the data dictionary of the 'birth' data can be found on the page 7 and 8 in the document https://cran.r-project.org/web/packages/catdata/catdata.pdf.**   
+
+**Using R to answer the following questions (You need to provide your code and the results). You will need to submit two files. One file is your R script (.R format), which contains all your codes to answer the questions below. The other file is a document file (.doc, .docx, .pdf format), which are the copy-and-paste results from R. Please submit the two files to Blackboard by the due date."**   
+
+***
+
+## **Question 1 (20 points):** 
+#### **The observations in the data are from 20 different countries, including France (FR), Belgium (BE), Canada (CA), Switzerland (CH), Great Britain (GB), and United States (US), etc.**
+
+Loading data:
+```{r}
+library(catdata)
+data(birth)
+str(birth)
+```
+***
+
+### **(1)** 
+#### **Find the number of observations for each country. (Hint: use table())**
+
+```{r}
+table(birth$Country)
+```
+***
+
+### **(2)** 
+#### **Assign the results in (1) to a data frame object named “country_freq”. In the data frame “country_freq”, each country is the observation. There are two variables in the data “country freq”. The first variable is named “Country”, which contains the name of the country of each observation. The second variable is named “Freq”, which contains the number of observations for each country in the birth data. (Hint: to create a data frame, use data.frame() or tbl_df() in the package dplyr. To rename the column names, use the function rename() in the package dplyr.)**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Reorder “country_freq” by variable “Freq” in descending order. (Hint: use arrange() in the package dplyr). Which country have the most number of observations?**
+
+```{r}
+
+```
+
+***
+### **(4)** 
+#### **Plot a bar plot to show the number of observations for the country France (FR), Belgium (BE), Switzerland (CH) and Canada (CA) in the birth data. The x-axis represents countries, and the y-axis represents number of observations. Set up the name of the plot to be “Number of observations by country”, the y-axis limits to range from 0 to 700, and the color of the bar to be green. (Hint: use barplot() to plot a bar plot.)**
+
+```{r}
+
+```
+
+***
+
+
+
+
+
+## **Question 2 (35 points):** 
+#### **For Question 2, use only the “birth” data where the country of birth is France (FR).**
+
+
+***
+
+### **(1)** 
+#### **Assign a new data frame object named “birth_fr”, which is the subset of the “birth” data where the country of birth is France. What is the number of observations in data frame “birth_fr”? (Hint: to subset a data, use filter() in package dplyr)**
+
+```{r}
+
+```
+
+***
+
+### **(2)** 
+#### **We are now interested in moms’ age on the day of birth. Before analyzing the data, we found out that some of the observations have missing values (NA) in the variable “AgeMother”. Remove the observations with missing values in the variable “AgeMother” in “birth_fr”. Now, what is the number of observations in data frame “birth_fr”? (Hint: to subset a data, use filter() in package “dplyr”. Use !is.na() to remove the observations with missing values in variable “AgeMother”.)**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Find the mean, median, mode, minimum, maximum, 1st quartile, 3rd quartile, variance, median absolute deviation, and standard deviation of mothers’ age in the data frame “birth_fr”. (Hint: use the basic statistics functions built in R)**
+
+```{r}
+
+```
+
+***
+### **(4)** 
+#### **Find the number of observations and the mean of mothers’ age for each year from 1994 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “year_birth_fr” with the column names “count” and “avg_mom_age”, respectively. (Hint: use filter() to subset the “birth” data in which the values of the variable “year” are from 1998 to 2004. Use group_by() and summarize() to find the number of births and the mean of mothers’ age for each year.)**
+
+```{r}
+
+```
+
+***
+### **(5)** 
+#### **Plot a line plot with the points on the line to show the trend of the mean mothers’ age. The x-axis represents year from 1994 through 2004, and the y-axis represents the mean of mothers’ age. Set up the name of the plot to be “Average moms’ age by year in France”, the y-axis limits to range from 20 to 28, the label of x to be Year, the label of y to be Age, the color of line to be blue and the width of line to be 2. (Hint: use plot(x, type = “o”))**
+
+```{r}
+
+```
+
+***
+
+
+## **Question 3 (45 points):** 
+#### **For Question 3, use only the data “birth_fr” in Question 2.**
+
+***
+
+### **(1)** 
+#### **We are now interested in babies’ gestational age (variable “Term”) in the data “birth_fr”. Some of the observations have missing values (NA) in the variable “Term”. Remove the observations with missing values in the variable “Term” in “birth_fr”. Now, what is the number of observations in data frame “birth_fr”?**
+
+```{r}
+
+```
+
+***
+
+### **(2)** 
+#### **Plot a histogram to show the distribution of “Term” in “birth_fr”. In this histogram, x-axis is Term and y-axis is Frequency. Set up the breaks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) and the x-axis tick marks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) as well. (Hint: use hist() to plot a histogram and axis() to customize the tick marks on x-axis)**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Preterm is defined as babies born before 37 weeks of pregnancy. Create a new column “Preterm” to flag if the observation is a preterm birth or not. The value 1 represents preterm and 0 represents no preterm. (Hint: use mutate() in library dplyr. Use ifelse() to flag if a preterm occurs or not.)**
+
+```{r}
+
+```
+
+***
+### **(4)** 
+#### **Find the number of observations and the number of pre-terms for each year from 1994 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “preterm_birth_fr” with the column names “count” and “num_preterm”, respectively.**
+
+```{r}
+
+```
+
+***
+### **(5)** 
+#### **Add a new column “preterm_rate” in “preterm_brith_fr” to show the preterm rate for each year from 1994 to 2004. Delete the column “count” in “preterm_birth_fr”.**
+
+```{r}
+
+```
+
+***
+### **(6)** 
+#### **Plot a line plot with points on the line to show the trend of preterm rate in France. The x-axis represents year from 1994 through 2004, and the y-axis the preterm rate. Set up the name of the plot to be Preterm rate by year in France, the y-axis limits to range from 0 to 0.15, the label of x to be Year, the label of y to be Preterm rate, the color of line to be blue and the width of line to be 2.**
+
+```{r}
+
+```
+
+***
+### **(7)** 
+#### **Full join the data frame “year_birth_fr” to “preterm_birth_fr” using the common variable “Year”. (Hint: use full_join() in library dplyr)**
+
+```{r}
+
+```
+
+***
+
+
+</br>
+</br>
+</br>
+</br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
