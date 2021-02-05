@@ -130,6 +130,11 @@ Modes(birth_fr$AgeMother) # mode
 amTable = table(birth_fr$AgeMother) 
 names(amTable)[amTable == max(amTable)] # another way to get mode(s)
 
+# same way to get mode(s) as above but in pipe form
+table(birth_fr$AgeMother) %>%
+  which.max() %>%
+  names()
+
 min(birth_fr$AgeMother) # minimum
 max(birth_fr$AgeMother) # maximum
 quantile(birth_fr$AgeMother, prob = 0.25) # 1st quartile
@@ -155,7 +160,7 @@ year_birth_fr
 ### **(5)** 
 #### **Plot a line plot with the points on the line to show the trend of the mean mothers’ age. The x-axis represents year from 1998 through 2004, and the y-axis represents the mean of mothers’ age. Set up the name of the plot to be “Average moms’ age by year in France”, the y-axis limits to range from 20 to 28, the label of x to be Year, the label of y to be Age, the color of line to be blue and the width of line to be 2. (Hint: use plot(x, type = “o”))**
 
-```{r}
+```{r fig.align="center"}
 plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  type = "o", 
      xlab = "Year", ylab = "Age", main = "Average moms' age by year in France", 
      col = "blue", lwd = 2, ylim = c(20, 28))
