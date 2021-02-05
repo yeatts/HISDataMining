@@ -27,8 +27,10 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 Loading data:
 ```{r}
 library(catdata)
+library(plyr) 
+# plyr loaded before dplyr becuase of console warning... 
+# using plyr:: and dplyr:: notation for clarity dealing with masked objects
 library(dplyr)
-library(plyr)
 data(birth)
 str(birth)
 ```
@@ -39,7 +41,7 @@ str(birth)
 
 ```{r}
 #table(birth$Country)
-count(birth, 'Country') #using count() from plyr package
+plyr::count(birth, 'Country') #using count() from plyr package
 ```
 ***
 
@@ -47,7 +49,7 @@ count(birth, 'Country') #using count() from plyr package
 #### **Assign the results in (1) to a data frame object named “country_freq”. In the data frame “country_freq”, each country is the observation. There are two variables in the data “country freq”. The first variable is named “Country”, which contains the name of the country of each observation. The second variable is named “Freq”, which contains the number of observations for each country in the birth data. (Hint: to create a data frame, use data.frame() or tbl_df() in the package dplyr. To rename the column names, use the function rename() in the package dplyr.)**
 
 ```{r}
-country_freq = count(birth, 'Country')
+country_freq = plyr::count(birth, 'Country')
 country_freq
 
 #country_freq = data.frame(table(birth$Country))
@@ -60,9 +62,12 @@ country_freq
 #### **Reorder “country_freq” by variable “Freq” in descending order. (Hint: use arrange() in the package dplyr). Which country have the most number of observations?**
 
 ```{r}
-country_freq = arrange(country_freq, desc(freq))
+country_freq = dplyr::arrange(country_freq, desc(freq))
 country_freq
+# fun code example for Jeremy ****can be deleted**** 
+filter(country_freq, freq == max(freq)) 
 ```
+France has the most observations of any country with 627.
 
 ***
 ### **(4)** 
@@ -114,12 +119,17 @@ There are now 626 observations when the row with an NA in the column 'AgeMother'
 ```{r}
 mean(birth_fr$AgeMother) # mean
 median(birth_fr$AgeMother) # median
+
 Modes <- function(x) { # function to calculate mode(s)
   ux <- unique(x)
   tab <- tabulate(match(x, ux))
   ux[tab == max(tab)]
 }
 Modes(birth_fr$AgeMother) # mode
+
+amTable = table(birth_fr$AgeMother) 
+names(amTable)[amTable == max(amTable)] # another way to get mode(s)
+
 min(birth_fr$AgeMother) # minimum
 max(birth_fr$AgeMother) # maximum
 quantile(birth_fr$AgeMother, prob = 0.25) # 1st quartile
@@ -131,18 +141,24 @@ sd(birth_fr$AgeMother) # standard deviation
 
 ***
 ### **(4)** 
-#### **Find the number of observations and the mean of mothers’ age for each year from 1994 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “year_birth_fr” with the column names “count” and “avg_mom_age”, respectively. (Hint: use filter() to subset the “birth” data in which the values of the variable “year” are from 1998 to 2004. Use group_by() and summarize() to find the number of births and the mean of mothers’ age for each year.)**
+#### **Find the number of observations and the mean of mothers’ age for each year from 1998 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “year_birth_fr” with the column names “count” and “avg_mom_age”, respectively. (Hint: use filter() to subset the “birth” data in which the values of the variable “year” are from 1998 to 2004. Use group_by() and summarize() to find the number of births and the mean of mothers’ age for each year.)**
 
 ```{r}
-
+birth_fr %>%
+  filter(Year >= 1998 & Year <= 2004) %>%
+  group_by(Year) %>%
+  summarize(count = n(), avg_mom_age = mean(AgeMother)) -> year_birth_fr
+year_birth_fr
 ```
 
 ***
 ### **(5)** 
-#### **Plot a line plot with the points on the line to show the trend of the mean mothers’ age. The x-axis represents year from 1994 through 2004, and the y-axis represents the mean of mothers’ age. Set up the name of the plot to be “Average moms’ age by year in France”, the y-axis limits to range from 20 to 28, the label of x to be Year, the label of y to be Age, the color of line to be blue and the width of line to be 2. (Hint: use plot(x, type = “o”))**
+#### **Plot a line plot with the points on the line to show the trend of the mean mothers’ age. The x-axis represents year from 1998 through 2004, and the y-axis represents the mean of mothers’ age. Set up the name of the plot to be “Average moms’ age by year in France”, the y-axis limits to range from 20 to 28, the label of x to be Year, the label of y to be Age, the color of line to be blue and the width of line to be 2. (Hint: use plot(x, type = “o”))**
 
 ```{r}
-
+plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  type = "o", 
+     xlab = "Year", ylab = "Age", main = "Average moms' age by year in France", 
+     col = "blue", lwd = 2, ylim = c(20, 28))
 ```
 
 ***
@@ -179,7 +195,7 @@ sd(birth_fr$AgeMother) # standard deviation
 
 ***
 ### **(4)** 
-#### **Find the number of observations and the number of pre-terms for each year from 1994 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “preterm_birth_fr” with the column names “count” and “num_preterm”, respectively.**
+#### **Find the number of observations and the number of pre-terms for each year from 1998 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “preterm_birth_fr” with the column names “count” and “num_preterm”, respectively.**
 
 ```{r}
 
@@ -187,7 +203,7 @@ sd(birth_fr$AgeMother) # standard deviation
 
 ***
 ### **(5)** 
-#### **Add a new column “preterm_rate” in “preterm_brith_fr” to show the preterm rate for each year from 1994 to 2004. Delete the column “count” in “preterm_birth_fr”.**
+#### **Add a new column “preterm_rate” in “preterm_brith_fr” to show the preterm rate for each year from 1998 to 2004. Delete the column “count” in “preterm_birth_fr”.**
 
 ```{r}
 
@@ -195,7 +211,7 @@ sd(birth_fr$AgeMother) # standard deviation
 
 ***
 ### **(6)** 
-#### **Plot a line plot with points on the line to show the trend of preterm rate in France. The x-axis represents year from 1994 through 2004, and the y-axis the preterm rate. Set up the name of the plot to be Preterm rate by year in France, the y-axis limits to range from 0 to 0.15, the label of x to be Year, the label of y to be Preterm rate, the color of line to be blue and the width of line to be 2.**
+#### **Plot a line plot with points on the line to show the trend of preterm rate in France. The x-axis represents year from 1998 through 2004, and the y-axis the preterm rate. Set up the name of the plot to be Preterm rate by year in France, the y-axis limits to range from 0 to 0.15, the label of x to be Year, the label of y to be Preterm rate, the color of line to be blue and the width of line to be 2.**
 
 ```{r}
 
