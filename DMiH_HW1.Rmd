@@ -27,9 +27,6 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 Loading data:
 ```{r}
 library(catdata)
-library(plyr) 
-# plyr loaded before dplyr becuase of console warning... 
-# using plyr:: and dplyr:: notation for clarity dealing with masked objects
 library(dplyr)
 data(birth)
 str(birth)
@@ -40,8 +37,8 @@ str(birth)
 #### **Find the number of observations for each country. (Hint: use table())**
 
 ```{r}
-#table(birth$Country)
-plyr::count(birth, 'Country') #using count() from plyr package
+# table converted to data frame because output is easier to read
+data.frame(table(birth$Country, dnn = "Country"))
 ```
 ***
 
@@ -49,12 +46,8 @@ plyr::count(birth, 'Country') #using count() from plyr package
 #### **Assign the results in (1) to a data frame object named “country_freq”. In the data frame “country_freq”, each country is the observation. There are two variables in the data “country freq”. The first variable is named “Country”, which contains the name of the country of each observation. The second variable is named “Freq”, which contains the number of observations for each country in the birth data. (Hint: to create a data frame, use data.frame() or tbl_df() in the package dplyr. To rename the column names, use the function rename() in the package dplyr.)**
 
 ```{r}
-country_freq = plyr::count(birth, 'Country')
+country_freq = data.frame(table(birth$Country, dnn = "Country"))
 country_freq
-
-#country_freq = data.frame(table(birth$Country))
-#names(country_freq)[1] = "Country"
-#country_freq
 ```
 
 ***
@@ -62,10 +55,10 @@ country_freq
 #### **Reorder “country_freq” by variable “Freq” in descending order. (Hint: use arrange() in the package dplyr). Which country have the most number of observations?**
 
 ```{r}
-country_freq = dplyr::arrange(country_freq, desc(freq))
+country_freq = arrange(country_freq, desc(Freq))
 country_freq
 # fun code example for Jeremy ****can be deleted**** 
-filter(country_freq, freq == max(freq)) 
+filter(country_freq, Freq == max(Freq)) 
 ```
 France has the most observations of any country with 627.
 
@@ -127,8 +120,8 @@ Modes <- function(x) { # function to calculate mode(s)
 }
 Modes(birth_fr$AgeMother) # mode
 
-amTable = table(birth_fr$AgeMother) 
-names(amTable)[amTable == max(amTable)] # another way to get mode(s)
+amTable = table(birth_fr$AgeMother) # another way to get mode(s)
+names(amTable)[amTable == max(amTable)]
 
 # same way to get mode(s) as above but in pipe form
 table(birth_fr$AgeMother) %>%
@@ -178,16 +171,20 @@ plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  type = "o",
 #### **We are now interested in babies’ gestational age (variable “Term”) in the data “birth_fr”. Some of the observations have missing values (NA) in the variable “Term”. Remove the observations with missing values in the variable “Term” in “birth_fr”. Now, what is the number of observations in data frame “birth_fr”?**
 
 ```{r}
-
+colSums(is.na(birth_fr))
+birth_fr = filter(birth_fr, !is.na(Term))
+nrow(birth_fr)
 ```
-
+There are now 624 observations in the data frame after removing the row with an NA value in the "AgeMother" column in Question 2 and removing the rows with NA values in the "Term" column. 
 ***
 
 ### **(2)** 
 #### **Plot a histogram to show the distribution of “Term” in “birth_fr”. In this histogram, x-axis is Term and y-axis is Frequency. Set up the breaks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) and the x-axis tick marks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) as well. (Hint: use hist() to plot a histogram and axis() to customize the tick marks on x-axis)**
 
-```{r}
-
+```{r fig.align="center"}
+hist(birth_fr$Term, main = "Distribution of births per term", xlab = "Term", 
+     ylab = "Frequency", breaks = seq(26,42,2), xaxt = 'n')
+axis(side = 1, at = seq(26,42,2))
 ```
 
 ***
@@ -195,7 +192,7 @@ plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  type = "o",
 #### **Preterm is defined as babies born before 37 weeks of pregnancy. Create a new column “Preterm” to flag if the observation is a preterm birth or not. The value 1 represents preterm and 0 represents no preterm. (Hint: use mutate() in library dplyr. Use ifelse() to flag if a preterm occurs or not.)**
 
 ```{r}
-
+birth_fr = mutate(birth_fr, Preterm = ifelse(Term < 37, 1, 0))
 ```
 
 ***
@@ -203,7 +200,11 @@ plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  type = "o",
 #### **Find the number of observations and the number of pre-terms for each year from 1998 through 2004 in the data frame “birth_fr”. Assign the results to a new data frame object “preterm_birth_fr” with the column names “count” and “num_preterm”, respectively.**
 
 ```{r}
-
+birth_fr %>%
+  filter(Year >= 1998 & Year <= 2004) %>%
+  group_by(Year) %>%
+  summarize(count = n(), num_preterm = sum(Preterm)) -> preterm_birth_fr
+preterm_birth_fr
 ```
 
 ***
