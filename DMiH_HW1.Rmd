@@ -182,9 +182,9 @@ There are now 624 observations in the data frame after removing the row with an 
 #### **Plot a histogram to show the distribution of “Term” in “birth_fr”. In this histogram, x-axis is Term and y-axis is Frequency. Set up the breaks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) and the x-axis tick marks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) as well. (Hint: use hist() to plot a histogram and axis() to customize the tick marks on x-axis)**
 
 ```{r fig.align="center"}
-hist(birth_fr$Term, main = "Distribution of births per term", xlab = "Term", 
-     ylab = "Frequency", breaks = seq(26,42,2), xaxt = 'n')
-axis(side = 1, at = seq(26,42,2))
+{hist(birth_fr$Term, main = "Distribution of births per term", xlab = "Term", 
+     ylab = "Frequency", breaks = seq(26,42,2), xaxt = 'n' )
+axis(side = 1, at = seq(26,42,2))}
 ```
 
 ***
@@ -193,6 +193,8 @@ axis(side = 1, at = seq(26,42,2))
 
 ```{r}
 birth_fr = mutate(birth_fr, Preterm = ifelse(Term < 37, 1, 0))
+preterm_group = group_by(birth_fr, Preterm)
+summarize(preterm_group, count=n())
 ```
 
 ***
@@ -209,9 +211,13 @@ preterm_birth_fr
 
 ***
 ### **(5)** 
-#### **Add a new column “preterm_rate” in “preterm_brith_fr” to show the preterm rate for each year from 1998 to 2004. Delete the column “count” in “preterm_birth_fr”.**
+#### **Add a new column “preterm_rate” in “preterm_birth_fr” to show the preterm rate for each year from 1998 to 2004. Delete the column “count” in “preterm_birth_fr”.**
 
 ```{r}
+preterm_birth_fr = mutate(preterm_birth_fr, preterm_rate=num_preterm/count)
+preterm_birth_fr
+preterm_birth_fr = subset(preterm_birth_fr, select=-c(count))
+preterm_birth_fr
 
 ```
 
@@ -219,8 +225,15 @@ preterm_birth_fr
 ### **(6)** 
 #### **Plot a line plot with points on the line to show the trend of preterm rate in France. The x-axis represents year from 1998 through 2004, and the y-axis the preterm rate. Set up the name of the plot to be Preterm rate by year in France, the y-axis limits to range from 0 to 0.15, the label of x to be Year, the label of y to be Preterm rate, the color of line to be blue and the width of line to be 2.**
 
-```{r}
-
+```{r fig.align="center"}
+plot(preterm_birth_fr$Year, preterm_birth_fr$preterm_rate, 
+     type="o",
+     main="Preterm rate by year in France", 
+     ylim=c(0,0.15),
+     xlab="Year",
+     ylab="Preterm Rate",
+     col="blue",
+     lwd=2)
 ```
 
 ***
@@ -228,7 +241,12 @@ preterm_birth_fr
 #### **Full join the data frame “year_birth_fr” to “preterm_birth_fr” using the common variable “Year”. (Hint: use full_join() in library dplyr)**
 
 ```{r}
-
+year_birth_fr
+preterm_birth_fr
+birth_join = full_join(x=year_birth_fr,
+                       y=preterm_birth_fr,
+                       by="Year")
+birth_join
 ```
 
 ***
