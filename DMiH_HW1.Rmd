@@ -57,8 +57,6 @@ country_freq
 ```{r}
 country_freq = arrange(country_freq, desc(Freq))
 country_freq
-# fun code example for Jeremy ****can be deleted**** 
-filter(country_freq, Freq == max(Freq)) 
 ```
 France has the most observations of any country with 627.
 
@@ -69,7 +67,12 @@ France has the most observations of any country with 627.
 ```{r}
 birthTable = table(birth$Country)
 selectColumns = c(birthTable["FR"], birthTable["BE"], birthTable["CH"], birthTable["CA"])
-barplot(selectColumns, main="Number of observations by country", xlab="Country", ylab="Frequency", ylim=c(0,700), col="green")
+barplot(selectColumns, 
+        main="Number of observations by country", 
+        xlab="Country", 
+        ylab="Frequency", 
+        ylim=c(0,700), 
+        col="green")
 ```
 
 ***
@@ -119,7 +122,14 @@ Modes <- function(x) { # function to calculate mode(s)
   ux[tab == max(tab)]
 }
 Modes(birth_fr$AgeMother) # mode
-
+min(birth_fr$AgeMother) # minimum
+max(birth_fr$AgeMother) # maximum
+quantile(birth_fr$AgeMother, prob = 0.75) # 3rd quartile
+var(birth_fr$AgeMother) # variance
+mad(birth_fr$AgeMother) # median absolute deviation
+sd(birth_fr$AgeMother) # standard deviation
+```
+```{r include=FALSE}
 amTable = table(birth_fr$AgeMother) # another way to get mode(s)
 names(amTable)[amTable == max(amTable)]
 
@@ -127,14 +137,6 @@ names(amTable)[amTable == max(amTable)]
 table(birth_fr$AgeMother) %>%
   which.max() %>%
   names()
-
-min(birth_fr$AgeMother) # minimum
-max(birth_fr$AgeMother) # maximum
-quantile(birth_fr$AgeMother, prob = 0.25) # 1st quartile
-quantile(birth_fr$AgeMother, prob = 0.75) # 3rd quartile
-var(birth_fr$AgeMother) # variance
-mad(birth_fr$AgeMother) # median absolute deviation
-sd(birth_fr$AgeMother) # standard deviation
 ```
 
 ***
@@ -154,9 +156,14 @@ year_birth_fr
 #### **Plot a line plot with the points on the line to show the trend of the mean mothers’ age. The x-axis represents year from 1998 through 2004, and the y-axis represents the mean of mothers’ age. Set up the name of the plot to be “Average moms’ age by year in France”, the y-axis limits to range from 20 to 28, the label of x to be Year, the label of y to be Age, the color of line to be blue and the width of line to be 2. (Hint: use plot(x, type = “o”))**
 
 ```{r fig.align="center"}
-plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  type = "o", 
-     xlab = "Year", ylab = "Age", main = "Average moms' age by year in France", 
-     col = "blue", lwd = 2, ylim = c(20, 28))
+plot(year_birth_fr$Year, year_birth_fr$avg_mom_age,  
+     type = "o", 
+     xlab = "Year", 
+     ylab = "Age", 
+     main = "Average moms' age by year in France", 
+     col = "blue", 
+     lwd = 2, 
+     ylim = c(20, 28))
 ```
 
 ***
@@ -182,8 +189,11 @@ There are now 624 observations in the data frame after removing the row with an 
 #### **Plot a histogram to show the distribution of “Term” in “birth_fr”. In this histogram, x-axis is Term and y-axis is Frequency. Set up the breaks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) and the x-axis tick marks to be (26, 28, 30, 32, 34, 36, 38, 40, 42) as well. (Hint: use hist() to plot a histogram and axis() to customize the tick marks on x-axis)**
 
 ```{r fig.align="center"}
-{hist(birth_fr$Term, main = "Distribution of births per term", xlab = "Term", 
-     ylab = "Frequency", breaks = seq(26,42,2), xaxt = 'n' )
+{hist(birth_fr$Term, main = "Distribution of births per term", 
+      xlab = "Term", 
+      ylab = "Frequency", 
+      breaks = seq(26,42,2), 
+      xaxt = 'n')
 axis(side = 1, at = seq(26,42,2))}
 ```
 
