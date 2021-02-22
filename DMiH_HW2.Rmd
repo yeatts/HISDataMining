@@ -1,0 +1,226 @@
+---
+title: "HPMT 5335 - Assignment 1"
+author: "Evan Munro and Jeremy Yeatts"
+date: "3/4/2021"
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    toc: true
+    toc_depth: 3
+---
+
+```{r include = F}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+***
+
+## **Question 1 (15 points):** 
+#### **Please refer to “heart” data in package “catdata”. We want to compare the adiposity between heart disease and no heart disease.**
+
+Loading data:
+```{r}
+library(catdata)
+```
+***
+
+### **(1)** 
+#### **Plot a box plot to show the adiposity between heart disease and no heart disease. Do these two groups have different distributions of adiposity in terms of mean and range? Briefly describe what you find in this box plot.**
+
+```{r}
+
+```
+***
+
+### **(2)** 
+#### **Do a pooled T-test and see if the means of adiposity between two groups are significantly different. What is the null hypothesis? What is the p-value and what is the 95% confidence interval?**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Do a F test to see if the variances of adiposity between two groups are significantly different if we use $\alpha=0.05$. What is the null hypothesis? What is the p-value and what is the 95% confidence interval?**
+
+```{r}
+
+```
+
+***
+
+
+
+
+
+## **Question 2 (15 points):** 
+#### **Please refer to “birth” data in package “catdata”. Only use the data where the country is France. We want to know if the weight of babies has the association with cesarean or not in France. **
+
+***
+
+### **(1)** 
+#### **Add a new column “BWeightG” to group to babies’ weights into three groups: $Weight \le 2500 g$, $2500 g < Weight \le 4000 g$, and $AgeMother > 4000 g$.**
+
+```{r}
+
+```
+
+***
+
+### **(2)** 
+#### **Plot a stacked bar plot where x axis is the baby weight’s group $(\le 2500$, $(2500, 4000]$, and $> 4000)$, and y axis is the number of babies who are were born by cesarean. Brief describe what you find in the bar plot.**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Do a Chi-square test to see if the association between baby’s weight and cesarean is significant if we use $\alpha=0.05$. Show the observed table and the expected table. What is the degrees of freedom? What is the p-value?**
+
+```{r}
+
+```
+
+***
+
+
+
+
+
+## **Question 3 (10 points):** 
+#### **Please refer to “diet_data” which was posted on Blackboard. We want to see if consuming wine and weight-based exercise would affect the means of weight changes. Before the analysis, be sure to delete the rows with missing value in column “change”.**
+
+***
+
+### **(1)** 
+#### **Plot a box plot with points representing the means to show the distribution of weight changes of consuming wine without weight-based exercise, consuming wine with weight-based exercise, not consuming wine without weight-based exercise and not consuming wine with weight-based exercise. Briefly describe what you find in the box plot.**
+
+```{r}
+
+```
+
+***
+
+### **(2)** 
+#### **Do a two-way ANOVA to see if weight-based exercise and consuming wine affect the means of weight changes. What conclusions you can make from the ANOVA test results and why?**
+
+```{r}
+
+```
+
+***
+
+
+
+
+
+## **Question 4 (20 points):** 
+#### **Please refer to “diet_data” (HW2_ diet_data.csv) which was posted on Blackboard.**
+
+***
+
+### **(1)** 
+#### **Do a linear regression using Excel and R to see if calories consuming per ounce daily would be able to predict daily weight changes. You will get a couple of tables in the results. Explain what the ANOVA table tells you. And explain what the coefficient table tells you. What are the confidence intervals of intercept $\beta_0$ and the slope $\beta_1$ if we set up the confidence level to be 95%? What is the value of R squared and what does the R squared tell you?**
+
+```{r}
+
+```
+
+***
+
+### **(2)** 
+#### **Plot a scatter plot using R where x-axis is calories consuming per ounce and y-axis is weight changes. On the plot, add the regression line from (2). (hint: use function abline())**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Check if your simple linear meets the assumptions regarding residuals using R. There are 4 assumptions for residuals.**  
+*	**The mean of residuals is zero.**  
+*	**The variances of residuals are equal for all predicted values (Homoscedasticity of residuals).**  
+*	**Residuals follow normal distribution.**  
+*	**X and residuals are uncorrelated.**  
+
+```{r}
+
+```
+
+***
+### **(4)** 
+#### **Do a multivariate linear regression using R to see if calories consuming per ounce daily, main meal was bag of five jam donuts, walk, and one large glass of wine would be able to predict daily weight changes. Compare this model with the one you get from Part (1).**
+
+```{r}
+
+```
+
+***
+
+
+
+
+
+## **Question 5 (40 points):** 
+#### **Please refer to heart failure data set (HW2_heart_failure_dataset.csv) that consists of 299 samples with 13 features.**
+
+***
+
+### **(1)** 
+#### **Load in the data using read.csv(). Do hierarchical clustering with complete linkage and Euclidean distance.**
+
+```{r}
+
+```
+
+***
+
+### **(2)** 
+#### **Plot the dendrogram and cut the dendrogram at a height that results in three distinct clusters.**
+
+```{r}
+
+```
+
+***
+### **(3)** 
+#### **Perform K-means clustering of the observations with $K = 3$. How well do the clusters that you obtained in K-means clustering compare to the true class labels?**  
+
+```{r}
+
+```
+
+***
+### **(4)** 
+#### **Perform K-means clustering with $K = 2$ and $K=4$. Describe your results. How many clusters would you recommend based on elbow method?**
+
+```{r}
+
+```
+
+***
+
+
+
+
+</br>
+</br>
+</br>
+</br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
