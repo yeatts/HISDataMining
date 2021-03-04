@@ -116,7 +116,7 @@ The majority of babies born are delivered without a cesarean section, and the ma
 
 ***
 ### **(3)** 
-#### **Do a Chi-square test to see if the association between baby’s weight and cesarean is significant if we use $\alpha=0.05$. Show the observed table and the expected table. What is the degrees of freedom? What is the p-value?**
+#### **Do a Chi-square test to see if the association between baby’s weight group and cesarean is significant if we use $\alpha=0.05$. Show the observed table and the expected table. What is the degrees of freedom? What is the p-value?**
 
 ```{r}
 chi = chisq.test(FrenchBabes$BWeightG, FrenchBabes$Cesarean)
@@ -267,7 +267,14 @@ anova(diet_fit, diet_mltpl_fit)
 #### **Load in the data using read.csv(). Do hierarchical clustering with complete linkage and Euclidean distance.**
 
 ```{r}
+library(NbClust)
+library(factoextra)
+library(gridExtra)
 hf_data = read.csv("HW2_heart_failure_dataset.csv")
+hf_data = na.omit(hf_data)
+sd_hf_data = scale(hf_data)
+data.dist = dist(hf_data, method = "euclidean")
+comp_link = hclust(data.dist, method = "complete")
 ```
 
 ***
@@ -276,7 +283,10 @@ hf_data = read.csv("HW2_heart_failure_dataset.csv")
 #### **Plot the dendrogram and cut the dendrogram at a height that results in three distinct clusters.**
 
 ```{r}
-
+hf_clust = cutree(comp_link, 3)
+head(sort(comp_link$height, decreasing = TRUE))
+plot(comp_link, main = "Complete Linkage")
+abline(h = 401990, col = 'red') # h is a value between the 2nd and 3rd split
 ```
 
 ***
@@ -284,16 +294,31 @@ hf_data = read.csv("HW2_heart_failure_dataset.csv")
 #### **Perform K-means clustering of the observations with $K = 3$. How well do the clusters that you obtained in K-means clustering compare to the true class labels?**  
 
 ```{r}
-
+km = kmeans(sd_hf_data, 3, nstart = 20)
+table(km$cluster,hf_clust)
+table(hf_clust)
+table(km$cluster)
 ```
+The K-means clusters are very different from the true class labels. The hierarchical method put roughly 95% of the points in class 1 and the remaining 5% in classes 2 and 3, whereas the K-means clusters had a more even distribution of points across the three classes with class 3 having 45%, class 2 having 32%, and class 1 having 23%.
 
 ***
 ### **(4)** 
 #### **Perform K-means clustering with $K = 2$ and $K=4$. Describe your results. How many clusters would you recommend based on elbow method?**
 
 ```{r}
+km_2 = kmeans(sd_hf_data, 2, nstart = 20)
+km_4 = kmeans(sd_hf_data, 4, nstart = 20)
+plot1 = fviz_cluster(list(data = sd_hf_data, cluster = hf_clust), geom = "point") + ggtitle ("Complete Linkage")
+plot2 = fviz_cluster(km, geom = "point", data = sd_hf_data) + ggtitle ("k = 3")
+plot3 = fviz_cluster(km_2, geom = "point", data = sd_hf_data) + ggtitle ("k = 2")
+plot4 = fviz_cluster(km_4, geom = "point", data = sd_hf_data) + ggtitle ("k = 4")
+grid.arrange(plot1,plot2,plot3,plot4, nrow =2)
+
+fviz_nbclust(sd_hf_data, kmeans, method = "wss") + labs(subtitle = "Elbow method")
+fviz_nbclust(sd_hf_data, kmeans, method = "silhouette") + labs(subtitle = "Elbow method (silhouette score)")
 
 ```
+Based on the cluster graphs and the two elbow methods, 2 clusters should be recommended.
 
 ***
 
