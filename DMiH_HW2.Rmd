@@ -34,14 +34,10 @@ summary(heart_df)
 
 boxplot(data=heart_df,
 		adiposity ~ y,
-<<<<<<< HEAD
-		main="Adiposity between heart disease and no heart disease")
-=======
 		main="Adiposity between heart disease and no heart disease",
 		xlab = "Heart Disease",
 		names = c("No", "Yes"))
   
->>>>>>> origin/Evan's
 ```
 
 The group with heart disease has a distribution of adiposity scores that shows higher scores at every quartile. The mean adiposity score is higher in the group with heart disease, and the range of adiposity scores is smaller for the heart disease group.
@@ -136,13 +132,8 @@ The p-value is 3.931e-06.
 ***
 Preprocessing
 ```{r}
-<<<<<<< HEAD
 diet_data = read.csv("C:/Users/jerem/Downloads/diet_data.csv")
 diet = diet_data[!is.na(diet_data$change),] # [row, columns]
-=======
-diet_data = read.csv("HW2_diet_data.csv")
-dd = diet_data[!is.na(diet_data$change),] # [row, columns]
->>>>>>> origin/Evan's
 ```
 
 ### **(1)** 
