@@ -126,7 +126,13 @@ diet = diet_data[!is.na(diet_data$change),] # [row, columns]
 ```
 
 ### **(1)** 
-#### **Plot a box plot with points representing the means to show the distribution of weight changes (changes) of consuming wine (wine) without weight-based exercise (weight), consuming wine with weight-based exercise, not consuming wine without weight-based exercise and not consuming wine with weight-based exercise. Briefly describe what you find in the box plot.**
+#### **Plot a box plot with points representing the means to show the distribution of (1) weight changes (change) of consuming wine (wine) without weight-based exercise (weight), (2) consuming wine with weight-based exercise, (3) not consuming wine without weight-based exercise and (4) not consuming wine with weight-based exercise. Briefly describe what you find in the box plot.**
+
+y = change  
+consuming wine w/o weight-based exercies  
+consuming wine w weight-based exercies  
+not consuming wine w/o weight-based exercies  
+not consuming wine with weight-based exercies  
 
 ```{r}
 summary(diet)
@@ -139,7 +145,7 @@ wine_no_weight_yes = filter(wine_no, wine_no$weight==1)
 wine_no_weight_no = filter(wine_no, wine_no$weight==0)
 
 {
-boxplot(data= wine_yes,
+boxplot(data=wine_yes,
 		change ~ weight,
 		main="consuming wine",
 		names= c("without weight-based exercies", "with weight-based exercies"))
@@ -153,7 +159,8 @@ boxplot(data=wine_no,
 points(c(mean(wine_no_weight_yes$change), mean(wine_no_weight_no$change)), col="red")
 }
 ```
-There isn't much weight changes with and without comsuming wine with and without weight-based exercies
+**Describing box plots:**  
+There isn't much weight change with and without comsuming wine or doing weight-based exercies
 
 ***
 
@@ -164,10 +171,10 @@ There isn't much weight changes with and without comsuming wine with and without
 aov2 = aov(change ~ weight * wine, data=diet)
 aov2
 summary(aov2)
-
-# interpreting 2 way anova in r
 ```
+**Interpreting 2 way anova in r:**  
 There was not a statistically significant interaction between the effects of weight-based exercies and wine on weight change. Wine consuption is significant with a p-value of 0.01. 
+
 ***
 
 ## **Question 4 (20 points):** 
