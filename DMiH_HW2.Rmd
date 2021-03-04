@@ -246,7 +246,7 @@ library(gridExtra)
 hf_data = read.csv("HW2_heart_failure_dataset.csv")
 hf_data = na.omit(hf_data)
 sd_hf_data = scale(hf_data)
-data.dist = dist(hf_data, method = "euclidean")
+data.dist = dist(sd_hf_data, method = "euclidean")
 comp_link = hclust(data.dist, method = "complete")
 ```
 
@@ -259,7 +259,7 @@ comp_link = hclust(data.dist, method = "complete")
 hf_clust = cutree(comp_link, 3)
 head(sort(comp_link$height, decreasing = TRUE))
 plot(comp_link, main = "Complete Linkage")
-abline(h = 401990, col = 'red') # h is a value between the 2nd and 3rd split
+abline(h = 10.5, col = 'red') # h is a value between the 2nd and 3rd split
 ```
 
 ***
