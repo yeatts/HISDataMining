@@ -34,8 +34,18 @@ summary(heart_df)
 
 boxplot(data=heart_df,
 		adiposity ~ y,
+<<<<<<< HEAD
 		main="Adiposity between heart disease and no heart disease")
+=======
+		main="Adiposity between heart disease and no heart disease",
+		xlab = "Heart Disease",
+		names = c("No", "Yes"))
+  
+>>>>>>> origin/Evan's
 ```
+
+The group with heart disease has a distribution of adiposity scores that shows higher scores at every quartile. The mean adiposity score is higher in the group with heart disease, and the range of adiposity scores is smaller for the heart disease group.
+
 ***
 
 ### **(2)** 
@@ -49,8 +59,8 @@ t.test(x = subset(heart_df$adiposity, heart_df$y==1),
 		var.equal = T)
 ```
 Null hypothesis: **$H_0: \mu_0 - \mu_1 = 0$**\
-p-value: **8.561e-05**\
-95 percent confidence interval: **1.444960 4.286862**\
+p-value: **3.051e-08**\
+95 percent confidence interval: **2.703560  5.598728**\
 
 ***
 ### **(3)** 
@@ -64,8 +74,8 @@ var.test(x = subset(heart_df$adiposity, heart_df$y==1),
 ```
 ***
 Null hypothesis: **$H_0: \sigma_1^2 = \sigma_2^2$**\
-p-value: **0.2799**\
-95 percent confidence interval: **0.6660296 1.1269203**\
+p-value: **0.1734**\
+95 percent confidence interval: **0.6314759  1.0891395**\
 
 ## **Question 2 (15 points):** \
 #### **Please refer to “birth” data in package “catdata”. Only use the data where the country is France. We want to know if the weight of babies has the association with cesarean or not in France. **
@@ -75,21 +85,18 @@ p-value: **0.2799**\
 # install.packages(c("ggpubr"))
 library(ggpubr)
 data(birth)
-birth_filter = filter(birth, Country == "FR")
+FrenchBabes = filter(birth, Country == 'FR')
 ```
 
 
 ### **(1)** 
-#### **Add a new column “BWeightG” to group to babies’ weights into three groups: $Weight \le 2500 g$, $2500 g < Weight \le 4000 g$, and Weight > 4000 g$.**
+#### **Add a new column “BWeightG” to group to babies’ weights into three groups: $Weight \le 2500 g$, $2500 g < Weight \le 4000 g$, and $Weight > 4000 g$.**
 
 ```{r}
-data(birth)
-str(birth)
-FrenchBabes = filter(birth, birth$Country == 'FR')
 FrenchBabes %>%
-  mutate(BWeightG = case_when(Weight <= 2500 ~ 'Low', 
-                            Weight > 2500 & Weight <= 4000 ~ 'Med', 
-                            Weight > 4000 ~ 'High')) -> FrenchBabes
+  mutate(BWeightG = case_when(Weight <= 2500 ~ '(0, 2500]', 
+                            Weight > 2500 & Weight <= 4000 ~ '(2500, 4000]', 
+                            Weight > 4000 ~ '(4000, inf)')) -> FrenchBabes
 ```
 
 ***
@@ -101,17 +108,25 @@ FrenchBabes %>%
 FrenchBabes$Cesarean = as.factor(FrenchBabes$Cesarean)
 ggplot(FrenchBabes, aes(x = BWeightG, fill = Cesarean)) + 
   geom_bar(position = "stack") +
-  scale_fill_discrete(name = "Cesarean", labels = c("No", "Yes"))
+  scale_fill_discrete(name = "Cesarean", labels = c("No", "Yes")) +
+  ggtitle("Number of babies born by weight and delivery method")
 
 ```
+The majority of babies born are delivered without a cesarean section, and the majority of babies born weigh between 2500 and 4000 grams. It also appears that a cesarean section is most likely when babies weigh less than 2500 grams at birth.
 
 ***
 ### **(3)** 
 #### **Do a Chi-square test to see if the association between baby’s weight and cesarean is significant if we use $\alpha=0.05$. Show the observed table and the expected table. What is the degrees of freedom? What is the p-value?**
 
 ```{r}
-
+chi = chisq.test(FrenchBabes$BWeightG, FrenchBabes$Cesarean)
+chi
+chi$observed
+chi$expected
 ```
+The association between baby's weight and cesarean is significant with $\alpha=0.05$.
+The degrees of freedom is df = 2.  
+The p-value is 3.931e-06. 
 
 ***
 
@@ -121,8 +136,13 @@ ggplot(FrenchBabes, aes(x = BWeightG, fill = Cesarean)) +
 ***
 Preprocessing
 ```{r}
+<<<<<<< HEAD
 diet_data = read.csv("C:/Users/jerem/Downloads/diet_data.csv")
 diet = diet_data[!is.na(diet_data$change),] # [row, columns]
+=======
+diet_data = read.csv("HW2_diet_data.csv")
+dd = diet_data[!is.na(diet_data$change),] # [row, columns]
+>>>>>>> origin/Evan's
 ```
 
 ### **(1)** 
@@ -182,6 +202,8 @@ There was not a statistically significant interaction between the effects of wei
 ***
 ### **(1)** 
 #### **Do a linear regression using Excel and R to see if calories consuming per ounce daily would be able to predict daily weight changes. You will get a couple of tables in the results. Explain what the ANOVA table tells you. And explain what the coefficient table tells you. What are the confidence intervals of intercept $\beta_0$ and the slope $\beta_1$ if we set up the confidence level to be 95%? What is the value of R squared and what does the R squared tell you?**
+
+![Excel Tables](dd_reg_tables.png)
 
 ```{r}
 
@@ -245,7 +267,7 @@ anova(diet_fit, diet_mltpl_fit)
 #### **Load in the data using read.csv(). Do hierarchical clustering with complete linkage and Euclidean distance.**
 
 ```{r}
-
+hf_data = read.csv("HW2_heart_failure_dataset.csv")
 ```
 
 ***
