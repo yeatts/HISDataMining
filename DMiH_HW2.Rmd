@@ -139,12 +139,6 @@ diet = diet_data[!is.na(diet_data$change),] # [row, columns]
 ### **(1)** 
 #### **Plot a box plot with points representing the means to show the distribution of (1) weight changes (change) of consuming wine (wine) without weight-based exercise (weight), (2) consuming wine with weight-based exercise, (3) not consuming wine without weight-based exercise and (4) not consuming wine with weight-based exercise. Briefly describe what you find in the box plot.**
 
-y = change  
-consuming wine w/o weight-based exercies  
-consuming wine w weight-based exercies  
-not consuming wine w/o weight-based exercies  
-not consuming wine with weight-based exercies  
-
 ```{r}
 summary(diet)
 wine_yes = filter(diet, diet$wine==1)
@@ -197,8 +191,21 @@ There was not a statistically significant interaction between the effects of wei
 ![Excel Tables](dd_reg_tables.png)
 
 ```{r}
-
+diet_fit = lm(data=diet, change ~ cals_per_oz)
+summary(diet_fit)
 ```
+**Annova table explanation:**  
+There is a statistically significant difference among the population means. The p-value for 215.71 is 5.39E-30, so the test statistic is significat at that level.  
+**Coefficient table explanation:**  
+For each unit increase in calorie consumed per ounce daily, daily weight change increases with 35.52716561 units.  
+**Conficdence intervals of intercept $\beta_0$ and slope $\beta_1$ if we set up the confidence level to be 95%:**  
+```{r}
+confint(diet_fit, level=0.95) 
+```
+$\beta_0$ = -49.77935 & -37.29503  
+$\beta_1$ = 30.74416 & 40.31017  
+**R squared value and explanation:**  
+$R^2$ value is 0.609847862. There is 61% variance in the dependent variable that the independent variables explain collectively.  
 
 ***
 
@@ -206,9 +213,6 @@ There was not a statistically significant interaction between the effects of wei
 #### **Plot a scatter plot using R where x-axis is calories consuming per ounce and y-axis is weight changes. On the plot, add the regression line from (1). (hint: use function abline())**
 
 ```{r}
-diet_fit = lm(data=diet, change ~ cals_per_oz)
-summary(diet_fit)
-
 plot(data=diet, change ~ cals_per_oz)
 abline(diet_fit, col="red")
 ```
