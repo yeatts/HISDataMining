@@ -139,6 +139,10 @@ diet = diet_data[!is.na(diet_data$change),] # [row, columns]
 ### **(1)** 
 #### **Plot a box plot with points representing the means to show the distribution of (1) weight changes (change) of consuming wine (wine) without weight-based exercise (weight), (2) consuming wine with weight-based exercise, (3) not consuming wine without weight-based exercise and (4) not consuming wine with weight-based exercise. Briefly describe what you find in the box plot.**
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1475a65898090528eeba6fcb3ccfd83c42a6e372
 ```{r}
 summary(diet)
 wine_yes = filter(diet, diet$wine==1)
