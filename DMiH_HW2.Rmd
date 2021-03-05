@@ -1,5 +1,5 @@
 ---
-title: "HPMT 5335 - Assignment 1"
+title: "HPMT 5335 - Assignment 2"
 author: "Evan Munro and Jeremy Yeatts"
 date: "3/4/2021"
 output: 
@@ -247,11 +247,11 @@ plot(diet_fit)
 ```{r}
 diet_mltpl_fit = lm(data=diet, change ~ cals_per_oz + five_donuts + walk + wine)
 summary(diet_mltpl_fit)
-
+summary (diet_fit)
 anova(diet_fit, diet_mltpl_fit)
 ```
 **Explanation:**\
-Calories per ounce consumed daily still shows the most statistically significant between both models. 
+The comparison result shows a non-significant result (p = 0.786). Adding five_donuts, walk, and wine did not statistically help when predicting our dependent variable, change.
 
 ***
 
