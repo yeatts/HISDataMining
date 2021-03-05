@@ -224,7 +224,7 @@ abline(diet_fit, col="red")
 ```{r}
 cor.test(diet$change, diet_fit$residuals)
 ```
-With a p-value of 2.2e-16, we can assum the residuals are uncorrelated.\
+With a p-value of 2.2e-16, we can assume the residuals are uncorrelated.\
 **The mean of residuals is zero**\
 ```{r}
 mean(diet_fit$residuals)
@@ -250,6 +250,9 @@ summary(diet_mltpl_fit)
 
 anova(diet_fit, diet_mltpl_fit)
 ```
+**Explanation:**\
+Calories per ounce consumed daily still shows the most statistically significant between both models. 
+
 ***
 
 ## **Question 5 (40 points):** 

@@ -497,15 +497,15 @@ For each unit increase in calorie consumed per ounce daily, daily weight change 
 ## sample estimates:
 ##       cor 
 ## 0.6246216</code></pre>
-<p>With a p-value of 2.2e-16, we can assum the residuals are uncorrelated.<br />
- <strong>The mean of residuals is zero</strong><br />
+<p>With a p-value of 2.2e-16, we can assume the residuals are uncorrelated.<br />
+<strong>The mean of residuals is zero</strong><br />
 </p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(diet_fit<span class="sc">$</span>residuals)</span></code></pre></div>
 <pre><code>## [1] 1.641442e-15</code></pre>
 <p>Based on the Residuals vs Fitted plot below, the mean of residuals does not equal zero. The line should be as close to 0 through out the plot but ours is not.<br />
- <strong>The variances of residuals are equal for all predicted values (Homoscedasticity of residuals)</strong><br />
+<strong>The variances of residuals are equal for all predicted values (Homoscedasticity of residuals)</strong><br />
 Based on the Scale-Location plot below, the variances of residulas are equal for most predicted values based on the horizontal line. Since it is not completely horizontal we could have a heteroscedasticity problem.<br />
- <strong>Residuals follow normal distribution</strong><br />
+<strong>Residuals follow normal distribution</strong><br />
 Based on the Normal Q-Q model plot below, the residual points follow the line for the most part making the residuals normally distributed.<br />
 </p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
@@ -550,6 +550,8 @@ Based on the Normal Q-Q model plot below, the residual points follow the line fo
 ##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
 ## 1    138 34163                           
 ## 2    135 33896  3       267 0.3545  0.786</code></pre>
+<p><strong>Explanation:</strong><br />
+Calories per ounce consumed daily still shows the most statistically significant between both models.</p>
 <hr />
 </div>
 </div>
