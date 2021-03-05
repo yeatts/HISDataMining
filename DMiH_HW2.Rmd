@@ -139,10 +139,6 @@ diet = diet_data[!is.na(diet_data$change),] # [row, columns]
 ### **(1)** 
 #### **Plot a box plot with points representing the means to show the distribution of (1) weight changes (change) of consuming wine (wine) without weight-based exercise (weight), (2) consuming wine with weight-based exercise, (3) not consuming wine without weight-based exercise and (4) not consuming wine with weight-based exercise. Briefly describe what you find in the box plot.**
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1475a65898090528eeba6fcb3ccfd83c42a6e372
 ```{r}
 summary(diet)
 wine_yes = filter(diet, diet$wine==1)
@@ -224,25 +220,24 @@ abline(diet_fit, col="red")
 ***
 ### **(3)** 
 #### **Check if your simple linear meets the assumptions regarding residuals using R. There are 4 assumptions for residuals.**  
-*	**X and residuals are uncorrelated.**  
-*	**The mean of residuals is zero.**   
-*	**The variances of residuals are equal for all predicted values (Homoscedasticity of residuals).**  
-*	**Residuals follow normal distribution.**  
+**X and residuals are uncorrelated**\
+```{r}
+cor.test(diet$change, diet_fit$residuals)
+```
+With a p-value of 2.2e-16, we can assum the residuals are uncorrelated.\
+**The mean of residuals is zero**\
+```{r}
+mean(diet_fit$residuals)
+```
+Based on the Residuals vs Fitted plot below, the mean of residuals does not equal zero. The line should be as close to 0 through out the plot but ours is not. \
+**The variances of residuals are equal for all predicted values (Homoscedasticity of residuals)**\
+Based on the Scale-Location plot below, the variances of residulas are equal for most predicted values based on the horizontal line. Since it is not completely horizontal we could have a heteroscedasticity problem. \
+**Residuals follow normal distribution**\
+Based on the Normal Q-Q model plot below, the residual points follow the line for the most part making the residuals normally distributed.\
 
-The assumptions of our model are not reasonable based on the information provided below.
 ```{r}
 par(mfrow = c(2,2))
 plot(diet_fit)
-
-# test - X and residuals are uncorrelated
-cor.test(diet$change, diet_fit$residuals)
-# test - the mean of residulas is zero
-mean(diet_fit$residuals)
-# test - the variance of residuals are equal for all predicted values
-# false
-# test - resdiuals follow normal distribution
-# no
-
 ```
 
 ***
